@@ -1,0 +1,25 @@
+version: "3.3"
+services:
+    api-frontend:
+        build: ./api-frontend
+        environment:
+            - API_BACKEND_URL=api-backend
+            - API_BACKEND_PORT=8001
+        ports:
+            - "8000:8000"
+        depends_on:
+            - api-backend
+        restart: on-failure
+        networks:
+            - backend
+
+    api-backend:
+        build: ./api-backend
+        ports:
+            - "8001:8001"
+        restart: on-failure
+        networks:
+            - backend
+networks:
+    backend:
+        driver: "bridge"
